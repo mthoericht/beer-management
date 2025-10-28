@@ -1,0 +1,28 @@
+{
+  "name": "beer-management",
+  "version": "1.0.0",
+  "description": "A simple beer drinking list application with MongoDB and React",
+  "main": "index.js",
+  "scripts": {
+    "fresh-install": "npm run clean && npm run install-all",
+    "clean": "rm -rf node_modules backend/node_modules frontend/node_modules",
+    "install-all": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd backend && npm run dev",
+    "stop-servers": "pkill -f 'nodemon' || true; pkill -f 'vite' || true",
+    "client": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start-db": "./start-db.sh",
+    "stop-db": "./stop-db.sh",
+    "restart-db": "./restart-db.sh",
+    "test-api": "curl http://localhost:5001/api/health",
+    "status": "npm run logs",
+    "logs": "./logs.sh"
+  },
+  "keywords": ["beer", "mongodb", "react", "vite", "tailwind"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

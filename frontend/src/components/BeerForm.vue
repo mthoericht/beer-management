@@ -49,13 +49,12 @@
       <label for="abv" class="block text-sm font-medium text-gray-700 mb-1">
         ABV (%) *
       </label>
-      <!-- TODO: Change min to 0 after testing -->
       <input
         type="number"
         id="abv"
         name="abv"
         v-model.number="formData.abv"
-        min="-100"
+        min="0"
         max="100"
         step="0.1"
         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"

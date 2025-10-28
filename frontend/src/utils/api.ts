@@ -23,8 +23,8 @@ class ApiService
       
       if (!response.ok) 
       {
-        console.log("ERROR?? ", data);
-        throw new Error(data.error || `HTTP error! status: ${response.status}`);
+        const errorMessage = data.message || data.error || `HTTP error! status: ${response.status}`;
+        throw new Error(errorMessage || `HTTP error! status: ${response.status}`);
       }
 
       return data;

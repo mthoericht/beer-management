@@ -99,8 +99,11 @@ export class BeerController {
         data: beer,
         message: 'Beer updated successfully'
       };
+
       res.json(response);
-    } catch (error) {
+
+    } catch (error) 
+    {
       const response: IApiResponse = {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'
@@ -139,8 +142,10 @@ export class BeerController {
   }
 
   // Get beer statistics
-  static async getBeerStats(req: Request, res: Response): Promise<void> {
-    try {
+  static async getBeerStats(req: Request, res: Response): Promise<void> 
+  {
+    try 
+    {
       const totalBeers = await Beer.countDocuments();
       const drankBeers = await Beer.countDocuments({ drank: true });
       const pendingBeers = totalBeers - drankBeers;

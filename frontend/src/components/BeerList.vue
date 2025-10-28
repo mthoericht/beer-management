@@ -94,13 +94,13 @@
 </template>
 
 <script setup lang="ts">
-import { BeerListProps } from '../types'
+import { BeerListProps } from '../types/BeerInterfaces'
 
 defineProps<BeerListProps>()
 
 defineEmits<{
   delete: [id: string]
-  edit: [beer: import('../types').Beer]
+  edit: [beer: import('../types/BeerInterfaces').Beer]
   'mark-as-drank': [id: string]
 }>()
 

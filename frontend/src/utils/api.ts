@@ -1,13 +1,16 @@
-import { Beer, BeerInput, BeerUpdate, ApiResponse, BeerStats } from '../types';
+import { Beer, BeerInput, BeerUpdate, ApiResponse, BeerStats } from '../types/BeerInterfaces';
 
 const API_BASE_URL = 'http://localhost:5001/api';
 
-class ApiService {
+class ApiService 
+{
   private async request<T>(
     endpoint: string,
     options: RequestInit = {}
-  ): Promise<ApiResponse<T>> {
-    try {
+  ): Promise<ApiResponse<T>> 
+  {
+    try 
+    {
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         headers: {
           'Content-Type': 'application/json',
@@ -18,12 +21,15 @@ class ApiService {
 
       const data = await response.json();
       
-      if (!response.ok) {
+      if (!response.ok) 
+      {
+        console.log("ERROR?? ", data);
         throw new Error(data.error || `HTTP error! status: ${response.status}`);
       }
 
       return data;
-    } catch (error) {
+    } catch (error) 
+    {
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred',

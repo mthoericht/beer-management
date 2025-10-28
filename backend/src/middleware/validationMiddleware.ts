@@ -5,12 +5,15 @@ import { z } from 'zod';
 // Validation Middleware für Request Body
 // ============================================
 
-export function validateBody<T>(schema: z.ZodSchema<T>) {
+export function validateBody<T>(schema: z.ZodSchema<T>) 
+{
   return (req: Request, res: Response, next: NextFunction) => {
+
     try {
       // Validierung und Parsing des Request Body
       req.body = schema.parse(req.body);
       next();
+      
     } catch (error) {
       if (error instanceof z.ZodError) {
         // Strukturierte Fehlerantwort
@@ -36,7 +39,8 @@ export function validateBody<T>(schema: z.ZodSchema<T>) {
 // Validation Middleware für Request Params
 // ============================================
 
-export function validateParams<T>(schema: z.ZodSchema<T>) {
+export function validateParams<T>(schema: z.ZodSchema<T>) 
+{
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       // Validierung der URL Parameter
@@ -67,7 +71,9 @@ export function validateParams<T>(schema: z.ZodSchema<T>) {
 // Validation Middleware für Query Params
 // ============================================
 
-export function validateQuery<T>(schema: z.ZodSchema<T>) {
+export function validateQuery<T>(schema: z.ZodSchema<T>) 
+{
+
   return (req: Request, res: Response, next: NextFunction) => {
     try {
       const parsed = schema.parse(req.query) as typeof req.query;

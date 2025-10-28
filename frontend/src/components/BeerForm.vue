@@ -49,12 +49,13 @@
       <label for="abv" class="block text-sm font-medium text-gray-700 mb-1">
         ABV (%) *
       </label>
+      <!-- TODO: Change min to 0 after testing -->
       <input
         type="number"
         id="abv"
         name="abv"
         v-model.number="formData.abv"
-        min="0"
+        min="-100"
         max="100"
         step="0.1"
         class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -129,7 +130,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import { BeerFormProps, BeerInput } from '../types'
+import { BeerFormProps, BeerInput } from '../types/BeerInterfaces'
 
 const props = defineProps<BeerFormProps>()
 
@@ -149,7 +150,9 @@ const formData = ref<BeerInput>({
 })
 
 watch(() => props.beer, (newBeer: BeerFormProps['beer']) => {
-  if (newBeer) {
+
+  if (newBeer) 
+  {
     formData.value = {
       name: newBeer.name,
       brewery: newBeer.brewery,
@@ -162,9 +165,11 @@ watch(() => props.beer, (newBeer: BeerFormProps['beer']) => {
   }
 }, { immediate: true })
 
-const handleSubmit = (): void => {
+const handleSubmit = (): void => 
+{
   // Validate required fields
-  if (!formData.value.name || !formData.value.brewery || !formData.value.style || formData.value.abv <= 0) {
+  if (!formData.value.name || !formData.value.brewery || !formData.value.style) 
+  {
     alert('Please fill in all required fields')
     return
   }

@@ -33,7 +33,7 @@
       <div v-if="totalBeers > 0" class="pt-4 border-t border-gray-200">
         <h4 class="font-medium text-gray-700 mb-3">Top Categories</h4>
         
-        <div v-if="topStyle.style" class="mb-2">
+        <div v-if="topStyle && topStyle.style" class="mb-2">
           <div class="flex justify-between text-sm">
             <span class="text-gray-600">Style:</span>
             <span class="font-medium">{{ topStyle.style }}</span>
@@ -41,12 +41,12 @@
           <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
             <div 
               class="bg-blue-600 h-2 rounded-full" 
-              :style="{ width: `${(topStyle.count / totalBeers) * 100}%` }"
+              :style="{ width: `${topStyle.percentage}%` }"
             ></div>
           </div>
         </div>
 
-        <div v-if="topBrewery.brewery">
+        <div v-if="topBrewery && topBrewery.brewery">
           <div class="flex justify-between text-sm">
             <span class="text-gray-600">Brewery:</span>
             <span class="font-medium">{{ topBrewery.brewery }}</span>
@@ -54,7 +54,7 @@
           <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
             <div 
               class="bg-green-600 h-2 rounded-full" 
-              :style="{ width: `${(topBrewery.count / totalBeers) * 100}%` }"
+              :style="{ width: `${topBrewery.percentage}%` }"
             ></div>
           </div>
         </div>
@@ -65,36 +65,19 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { BeerStatsProps } from '../types'
-import type { Beer } from '../types'
+import { BeerStatsProps } from '../types/BeerInterfaces'
+import { BeerStatsHelper } from '../utils/beerStatsHelper'
 
 const props = defineProps<BeerStatsProps>()
 
-const totalBeers = computed(() => props.beers.length)
-const drankBeers = computed(() => props.beers.filter((beer: Beer) => beer.drank).length)
-const pendingBeers = computed(() => totalBeers.value - drankBeers.value)
-const ratedBeers = computed(() => props.beers.filter((beer: Beer) => beer.rating).length)
-const averageRating = computed(() => {
-  if (ratedBeers.value === 0) return '0'
-  const sum = props.beers.reduce((total, beer) => total + (beer.rating || 0), 0)
-  return (sum / ratedBeers.value).toFixed(1)
-})
+// Use the helper class for all calculations
+const stats = computed(() => BeerStatsHelper.calculateStats(props.beers))
 
-const styles = computed(() => [...new Set(props.beers.map((beer: Beer) => beer.style))])
-const breweries = computed(() => [...new Set(props.beers.map((beer: Beer) => beer.brewery))])
-
-const topStyle = computed(() => {
-  return styles.value.reduce((top, style) => {
-    const count = props.beers.filter((beer: Beer) => beer.style === style).length
-    return count > (top.count || 0) ? { style, count } : top
-  }, {} as { style: string; count: number })
-})
-
-const topBrewery = computed(() => {
-  return breweries.value.reduce((top, brewery) => {
-    const count = props.beers.filter((beer: Beer) => beer.brewery === brewery).length
-    return count > (top.count || 0) ? { brewery, count } : top
-  }, {} as { brewery: string; count: number })
-})
+const totalBeers = computed(() => stats.value.totalBeers)
+const drankBeers = computed(() => stats.value.drankBeers)
+const pendingBeers = computed(() => stats.value.pendingBeers)
+const averageRating = computed(() => stats.value.averageRating.toString())
+const topStyle = computed(() => stats.value.topStyle)
+const topBrewery = computed(() => stats.value.topBrewery)
 </script>
 

@@ -61,7 +61,7 @@ import BeerList from './components/BeerList.vue'
 import BeerForm from './components/BeerForm.vue'
 import BeerStats from './components/BeerStats.vue'
 import LoadingSpinner from './components/LoadingSpinner.vue'
-import { Beer, BeerInput, LoadingState } from './types'
+import { Beer, BeerInput, LoadingState } from './types/BeerInterfaces'
 import { apiService } from './utils/api'
 
 const beers = ref<Beer[]>([])
@@ -91,36 +91,31 @@ const fetchBeers = async (): Promise<void> => {
 }
 
 // Add or update beer
-const handleSaveBeer = async (beerData: BeerInput): Promise<void> => {
-  try {
+const handleSaveBeer = async (beerData: BeerInput): Promise<void> => 
+{
+  try 
+  {
     const response = editingBeer.value
       ? await apiService.updateBeer(editingBeer.value._id, beerData)
       : await apiService.createBeer(beerData)
 
-    if (response.success) {
+    if (response.success) 
+    {
       await fetchBeers()
-      showForm.value = false
-      editingBeer.value = undefined
-    } else {
-      error.value = response.error || 'Failed to save beer'
+      showForm.value = false;
+      editingBeer.value = undefined;
+    } else 
+    {
+      console.log("HALLOOO?? ",response);
+      error.value = response.error || 'Failed to save beer';
+      const errorMessage = response.message || response.error || 'Failed to save beer';
+      alert(errorMessage);
     }
-  } catch (err) {
-    error.value = err instanceof Error ? err.message : 'Unknown error'
-  }
-}
-
-// Delete beer
-const handleDeleteBeer = async (id: string): Promise<void> => {
-  try {
-    const response = await apiService.deleteBeer(id)
-    
-    if (response.success) {
-      await fetchBeers()
-    } else {
-      error.value = response.error || 'Failed to delete beer'
-    }
-  } catch (err) {
-    error.value = err instanceof Error ? err.message : 'Unknown error'
+  } catch (err) 
+  {
+    const errorMsg = err instanceof Error ? err.message : 'Unknown error';
+    error.value = errorMsg;
+    alert(errorMsg);
   }
 }
 
@@ -145,6 +140,25 @@ const handleMarkAsDrank = async (id: string): Promise<void> => {
     }
   } catch (err) {
     error.value = err instanceof Error ? err.message : 'Unknown error'
+  }
+}
+
+// Delete beer
+const handleDeleteBeer = async (id: string): Promise<void> => {
+  if (!confirm('Are you sure you want to delete this beer?')) return
+  
+  try {
+    const response = await apiService.deleteBeer(id)
+    
+    if (response.success) {
+      await fetchBeers()
+    } else {
+      error.value = response.error || 'Failed to delete beer'
+      alert(error.value)
+    }
+  } catch (err) {
+    error.value = err instanceof Error ? err.message : 'Unknown error'
+    alert(error.value)
   }
 }
 

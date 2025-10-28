@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Beer } from '../models/Beer';
-import { IBeerInput, IBeerUpdate, IApiResponse, IBeerStats } from '../types';
+import { IApiResponse, IBeerStats } from '../types';
+import { BeerInput, BeerUpdate } from '../validators/beerSchemas';
 
 export class BeerController {
   // Get all beers
@@ -51,9 +52,9 @@ export class BeerController {
   }
 
   // Create new beer
-  static async createBeer(req: Request<{}, {}, IBeerInput>, res: Response): Promise<void> {
+  static async createBeer(req: Request<{}, {}, BeerInput>, res: Response): Promise<void> {
     try {
-      const beerData: IBeerInput = req.body;
+      const beerData: BeerInput = req.body;
       const beer = new Beer(beerData);
       await beer.save();
 
@@ -73,10 +74,10 @@ export class BeerController {
   }
 
   // Update beer by ID
-  static async updateBeer(req: Request<{ id: string }, {}, IBeerUpdate>, res: Response): Promise<void> {
+  static async updateBeer(req: Request<{ id: string }, {}, BeerUpdate>, res: Response): Promise<void> {
     try {
       const { id } = req.params;
-      const updateData: IBeerUpdate = req.body;
+      const updateData: BeerUpdate = req.body;
 
       const beer = await Beer.findByIdAndUpdate(
         id,

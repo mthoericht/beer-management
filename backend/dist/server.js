@@ -12,13 +12,18 @@ dotenv_1.default.config();
 class App {
     constructor() {
         this.app = (0, express_1.default)();
-        this.port = parseInt(process.env.PORT || '5000', 10);
+        this.port = parseInt(process.env.PORT || '5001', 10);
         this.initializeMiddlewares();
         this.initializeRoutes();
         this.initializeDatabase();
     }
     initializeMiddlewares() {
-        this.app.use((0, cors_1.default)());
+        this.app.use((0, cors_1.default)({
+            origin: ['http://localhost:5173', 'http://localhost:5174', 'http://localhost:3000'],
+            credentials: true,
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+            allowedHeaders: ['Content-Type', 'Authorization']
+        }));
         this.app.use(express_1.default.json());
         this.app.use(express_1.default.urlencoded({ extended: true }));
     }

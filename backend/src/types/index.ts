@@ -12,18 +12,6 @@ export interface IBeer extends Document {
   dateDrank?: Date;
 }
 
-export interface IBeerInput {
-  name: string;
-  brewery: string;
-  style: string;
-  abv: number;
-  rating?: number;
-  notes?: string;
-  drank?: boolean;
-}
-
-export interface IBeerUpdate extends Partial<IBeerInput> {}
-
 export interface IApiResponse<T = any> {
   success: boolean;
   data?: T;

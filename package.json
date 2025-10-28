@@ -16,10 +16,9 @@
     "stop-db": "./stop-db.sh",
     "restart-db": "./restart-db.sh",
     "test-api": "curl http://localhost:5001/api/health",
-    "status": "npm run logs",
-    "logs": "./logs.sh"
+    "status": "./logs.sh"
   },
-  "keywords": ["beer", "mongodb", "react", "vite", "tailwind"],
+  "keywords": ["beer", "mongodb", "vuejs", "vite", "tailwind"],
   "author": "",
   "license": "MIT",
   "devDependencies": {

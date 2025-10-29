@@ -16,12 +16,20 @@
     "stop-db": "./stop-db.sh",
     "restart-db": "./restart-db.sh",
     "test-api": "curl http://localhost:5001/api/health",
-    "status": "./logs.sh"
+    "status": "./logs.sh",
+    "test": "playwright test",
+    "test:unit": "playwright test --project=api-unit",
+    "test:integration": "playwright test --project=integration",
+    "test:ui": "playwright test --ui",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report"
   },
   "keywords": ["beer", "mongodb", "vuejs", "vite", "tailwind"],
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^20.0.0",
     "concurrently": "^8.2.2"
   }
 }

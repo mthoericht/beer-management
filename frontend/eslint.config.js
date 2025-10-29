@@ -12,6 +12,7 @@ export default [
     rules: {
       'vue/multi-word-component-names': 'off',
       'no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
+      'brace-style': ['error', 'allman', { allowSingleLine: true }],
     },
   },
 ]

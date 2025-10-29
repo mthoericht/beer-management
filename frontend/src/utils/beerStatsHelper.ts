@@ -24,11 +24,13 @@ export interface CategoryCount {
   count: number;
 }
 
-export class BeerStatsHelper {
+export class BeerStatsHelper 
+{
   /**
    * Calculate all statistics for a list of beers
    */
-  static calculateStats(beers: Beer[]): BeerStatistics {
+  static calculateStats(beers: Beer[]): BeerStatistics 
+  {
     const totalBeers = beers.length;
     const drankBeers = this.countDrankBeers(beers);
     const pendingBeers = totalBeers - drankBeers;
@@ -54,38 +56,44 @@ export class BeerStatsHelper {
   /**
    * Count total beers
    */
-  static countTotalBeers(beers: Beer[]): number {
+  static countTotalBeers(beers: Beer[]): number 
+  {
     return beers.length;
   }
 
   /**
    * Count drank beers
    */
-  static countDrankBeers(beers: Beer[]): number {
+  static countDrankBeers(beers: Beer[]): number 
+  {
     return beers.filter((beer) => beer.drank).length;
   }
 
   /**
    * Count pending beers (not yet drank)
    */
-  static countPendingBeers(beers: Beer[]): number {
+  static countPendingBeers(beers: Beer[]): number 
+  {
     return beers.filter((beer) => !beer.drank).length;
   }
 
   /**
    * Count rated beers
    */
-  static countRatedBeers(beers: Beer[]): number {
+  static countRatedBeers(beers: Beer[]): number 
+  {
     return beers.filter((beer) => beer.rating != null && beer.rating > 0).length;
   }
 
   /**
    * Calculate average rating
    */
-  static calculateAverageRating(beers: Beer[], decimals: number = 1): number {
+  static calculateAverageRating(beers: Beer[], decimals: number = 1): number 
+  {
     const ratedBeersList = beers.filter((beer) => beer.rating != null && beer.rating > 0);
     
-    if (ratedBeersList.length === 0) {
+    if (ratedBeersList.length === 0) 
+    {
       return 0;
     }
 
@@ -98,8 +106,10 @@ export class BeerStatsHelper {
   /**
    * Calculate average ABV
    */
-  static calculateAverageABV(beers: Beer[], decimals: number = 2): number {
-    if (beers.length === 0) {
+  static calculateAverageABV(beers: Beer[], decimals: number = 2): number 
+  {
+    if (beers.length === 0) 
+    {
       return 0;
     }
 
@@ -112,14 +122,16 @@ export class BeerStatsHelper {
   /**
    * Get unique styles
    */
-  static getUniqueStyles(beers: Beer[]): string[] {
+  static getUniqueStyles(beers: Beer[]): string[] 
+  {
     return [...new Set(beers.map((beer) => beer.style))];
   }
 
   /**
    * Get unique breweries
    */
-  static getUniqueBreweries(beers: Beer[]): string[] {
+  static getUniqueBreweries(beers: Beer[]): string[] 
+  {
     return [...new Set(beers.map((beer) => beer.brewery))];
   }
 
@@ -134,11 +146,13 @@ export class BeerStatsHelper {
     }
 
     const styleCounts = this.countByCategory(beers, 'style');
-    const topStyle = styleCounts.reduce((top, current) => {
+    const topStyle = styleCounts.reduce((top, current) => 
+    {
       return current.count > top.count ? current : top;
     }, { style: '', count: 0 });
 
-    if (topStyle.style === '' || !topStyle.style) {
+    if (topStyle.style === '' || !topStyle.style) 
+    {
       return undefined;
     }
 
@@ -161,11 +175,13 @@ export class BeerStatsHelper {
 
     const breweryCounts = this.countByCategory(beers, 'brewery');
     
-    const topBrewery = breweryCounts.reduce((top, current) => {
+    const topBrewery = breweryCounts.reduce((top, current) => 
+    {
       return current.count > top.count ? current : top;
     }, { brewery: '', count: 0 });
 
-    if (topBrewery.brewery === '' || !topBrewery.brewery) {
+    if (topBrewery.brewery === '' || !topBrewery.brewery) 
+    {
       return undefined;
     }
 
@@ -182,8 +198,10 @@ export class BeerStatsHelper {
   static countByCategory(
     beers: Beer[], 
     category: 'style' | 'brewery'
-  ): CategoryCount[] {
-    const counts = beers.reduce((acc, beer) => {
+  ): CategoryCount[] 
+  {
+    const counts = beers.reduce((acc, beer) => 
+    {
       const key = beer[category];
       acc[key] = (acc[key] || 0) + 1;
       return acc;
@@ -198,7 +216,8 @@ export class BeerStatsHelper {
   /**
    * Get all style counts sorted by popularity
    */
-  static getStyleCounts(beers: Beer[]): Array<{ style: string; count: number }> {
+  static getStyleCounts(beers: Beer[]): Array<{ style: string; count: number }> 
+  {
     const counts = this.countByCategory(beers, 'style');
     return counts
       .filter((item): item is { style: string; count: number } => item.style !== undefined)
@@ -208,7 +227,8 @@ export class BeerStatsHelper {
   /**
    * Get all brewery counts sorted by popularity
    */
-  static getBreweryCounts(beers: Beer[]): Array<{ brewery: string; count: number }> {
+  static getBreweryCounts(beers: Beer[]): Array<{ brewery: string; count: number }> 
+  {
     const counts = this.countByCategory(beers, 'brewery');
     return counts
       .filter((item): item is { brewery: string; count: number } => item.brewery !== undefined)
@@ -218,36 +238,42 @@ export class BeerStatsHelper {
   /**
    * Get beers by style
    */
-  static getBeersByStyle(beers: Beer[], style: string): Beer[] {
+  static getBeersByStyle(beers: Beer[], style: string): Beer[] 
+  {
     return beers.filter((beer) => beer.style === style);
   }
 
   /**
    * Get beers by brewery
    */
-  static getBeersByBrewery(beers: Beer[], brewery: string): Beer[] {
+  static getBeersByBrewery(beers: Beer[], brewery: string): Beer[] 
+  {
     return beers.filter((beer) => beer.brewery === brewery);
   }
 
   /**
    * Get beers with rating
    */
-  static getRatedBeers(beers: Beer[]): Beer[] {
+  static getRatedBeers(beers: Beer[]): Beer[] 
+  {
     return beers.filter((beer) => beer.rating != null && beer.rating > 0);
   }
 
   /**
    * Get highly rated beers (rating >= 4)
    */
-  static getHighlyRatedBeers(beers: Beer[], minRating: number = 4): Beer[] {
+  static getHighlyRatedBeers(beers: Beer[], minRating: number = 4): Beer[] 
+  {
     return beers.filter((beer) => (beer.rating || 0) >= minRating);
   }
 
   /**
    * Get percentage of drank beers
    */
-  static getDrankPercentage(beers: Beer[]): number {
-    if (beers.length === 0) {
+  static getDrankPercentage(beers: Beer[]): number 
+  {
+    if (beers.length === 0) 
+    {
       return 0;
     }
     return (this.countDrankBeers(beers) / beers.length) * 100;
@@ -256,8 +282,10 @@ export class BeerStatsHelper {
   /**
    * Get percentage of rated beers
    */
-  static getRatedPercentage(beers: Beer[]): number {
-    if (beers.length === 0) {
+  static getRatedPercentage(beers: Beer[]): number 
+  {
+    if (beers.length === 0) 
+    {
       return 0;
     }
     return (this.countRatedBeers(beers) / beers.length) * 100;
@@ -266,14 +294,16 @@ export class BeerStatsHelper {
   /**
    * Format rating for display
    */
-  static formatRating(rating: number): string {
+  static formatRating(rating: number): string 
+  {
     return rating.toFixed(1);
   }
 
   /**
    * Format percentage for display
    */
-  static formatPercentage(percentage: number, decimals: number = 0): string {
+  static formatPercentage(percentage: number, decimals: number = 0): string 
+  {
     return `${percentage.toFixed(decimals)}%`;
   }
 }

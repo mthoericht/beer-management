@@ -1,4 +1,5 @@
-export interface Beer {
+export interface Beer 
+{
   _id: string;
   name: string;
   brewery: string;
@@ -13,7 +14,8 @@ export interface Beer {
   updatedAt?: string;
 }
 
-export interface BeerInput {
+export interface BeerInput 
+{
   name: string;
   brewery: string;
   style: string;
@@ -23,51 +25,60 @@ export interface BeerInput {
   drank?: boolean | undefined;
 }
 
-export interface BeerUpdate extends Partial<BeerInput> {}
+export interface BeerUpdate extends Partial<BeerInput> 
+{}
 
-export interface ApiResponse<T = any> {
+export interface ApiResponse<T = any> 
+{
   success: boolean;
   data?: T;
   error?: string;
   message?: string;
 }
 
-export interface BeerStats {
+export interface BeerStats 
+{
   totalBeers: number;
   drankBeers: number;
   pendingBeers: number;
   ratedBeers: number;
   averageRating: number;
-  topStyle?: {
+  topStyle?: 
+  {
     style: string;
     count: number;
   };
-  topBrewery?: {
+  topBrewery?: 
+  {
     brewery: string;
     count: number;
   };
 }
 
-export interface BeerFormProps {
+export interface BeerFormProps 
+{
   beer?: Beer | undefined;
   onSave: (beerData: BeerInput) => Promise<void>;
   onCancel: () => void;
 }
 
-export interface BeerListProps {
+export interface BeerListProps 
+{
   beers: Beer[];
   onDelete: (id: string) => Promise<void>;
   onEdit: (beer: Beer) => void;
   onMarkAsDrank: (id: string) => Promise<void>;
 }
 
-export interface BeerStatsProps {
+export interface BeerStatsProps 
+{
   beers: Beer[];
 }
 
 export type LoadingState = 'idle' | 'loading' | 'success' | 'error';
 
-export interface AppState {
+export interface AppState 
+{
   beers: Beer[];
   loading: LoadingState;
   error: string | null;

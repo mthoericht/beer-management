@@ -6,32 +6,42 @@ const API_BASE_URL = 'http://localhost:5001/api';
 const generateTestId = () => `TEST-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
 
 // Helper to delete beer by exact name and brewery via API (only deletes test beers)
-const deleteBeerByAttributes = async (request: any, name: string, brewery: string) => {
-  try {
+const deleteBeerByAttributes = async (request: any, name: string, brewery: string) => 
+{
+  try 
+  {
     // Only delete if it's a test beer (starts with TEST-)
-    if (!name.startsWith('TEST-')) {
+    if (!name.startsWith('TEST-')) 
+    {
       console.warn(`Skipping cleanup for non-test beer: ${name}`);
       return;
     }
     
     const response = await request.get(`${API_BASE_URL}/beers`);
-    if (response.ok()) {
+    if (response.ok()) 
+    {
       const data = await response.json();
-      if (data.success && Array.isArray(data.data)) {
+      if (data.success && Array.isArray(data.data)) 
+      {
         // Find exact match for name and brewery
         const beer = data.data.find((b: any) => b.name === name && b.brewery === brewery);
-        if (beer && beer._id) {
+        if (beer && beer._id) 
+        {
           await request.delete(`${API_BASE_URL}/beers/${beer._id}`);
         }
       }
     }
-  } catch (e) {
+  }
+  catch (e) 
+  {
     // Ignore cleanup errors
   }
 };
 
-test.describe('Beer Management App - Integration Tests', () => {
-  test.beforeEach(async ({ page }) => {
+test.describe('Beer Management App - Integration Tests', () => 
+{
+  test.beforeEach(async ({ page }) => 
+  {
     // Navigate to the app
     await page.goto('/');
     
@@ -39,29 +49,36 @@ test.describe('Beer Management App - Integration Tests', () => {
     await page.waitForLoadState('networkidle');
   });
 
-  test.describe('App Loading', () => {
-    test('should display the app title', async ({ page }) => {
+  test.describe('App Loading', () => 
+  {
+    test('should display the app title', async ({ page }) => 
+    {
       await expect(page.getByRole('heading', { name: /beer management/i })).toBeVisible();
     });
 
-    test('should display the beer list section', async ({ page }) => {
+    test('should display the beer list section', async ({ page }) => 
+    {
       await expect(page.getByRole('heading', { name: /beer list/i })).toBeVisible();
     });
 
-    test('should show "Add New Beer" button', async ({ page }) => {
+    test('should show "Add New Beer" button', async ({ page }) => 
+    {
       await expect(page.getByRole('button', { name: /add new beer/i })).toBeVisible();
     });
   });
 
-  test.describe('Beer Form', () => {
-    test('should open form when clicking "Add New Beer" button', async ({ page }) => {
+  test.describe('Beer Form', () => 
+  {
+    test('should open form when clicking "Add New Beer" button', async ({ page }) => 
+    {
       await page.getByRole('button', { name: /add new beer/i }).click();
       
       await expect(page.getByRole('heading', { name: /add new beer/i })).toBeVisible();
       await expect(page.getByLabel(/beer name/i)).toBeVisible();
     });
 
-    test('should display all form fields', async ({ page }) => {
+    test('should display all form fields', async ({ page }) => 
+    {
       await page.getByRole('button', { name: /add new beer/i }).click();
       
       await expect(page.getByLabel(/beer name/i)).toBeVisible();
@@ -73,7 +90,8 @@ test.describe('Beer Management App - Integration Tests', () => {
       await expect(page.getByLabel(/already drank/i)).toBeVisible();
     });
 
-    test('should cancel form when clicking cancel button', async ({ page }) => {
+    test('should cancel form when clicking cancel button', async ({ page }) => 
+    {
       await page.getByRole('button', { name: /add new beer/i }).click();
       
       await expect(page.getByRole('heading', { name: /add new beer/i })).toBeVisible();
@@ -85,9 +103,11 @@ test.describe('Beer Management App - Integration Tests', () => {
     });
   });
 
-  test.describe('Adding a Beer', () => {
+  test.describe('Adding a Beer', () => 
+  {
     
-    test('should add a new beer successfully', async ({ page, request }) => {
+    test('should add a new beer successfully', async ({ page, request }) => 
+    {
       const testId = generateTestId();
       const beerName = `TEST-${testId}-IPA`;
       const brewery = `TEST-${testId}-Brewery`;
@@ -119,7 +139,8 @@ test.describe('Beer Management App - Integration Tests', () => {
       await deleteBeerByAttributes(request, beerName, brewery);
     });
 
-    test('should validate required fields', async ({ page }) => {
+    test('should validate required fields', async ({ page }) => 
+    {
       await page.getByRole('button', { name: /add new beer/i }).click();
       
       // Try to submit without filling required fields
@@ -131,7 +152,8 @@ test.describe('Beer Management App - Integration Tests', () => {
       expect(validity).toBe(false);
     });
 
-    test('should add beer with optional fields', async ({ page, request }) => {
+    test('should add beer with optional fields', async ({ page, request }) => 
+    {
       const testId = generateTestId();
       const beerName = `TEST-${testId}-Rated IPA`;
       const brewery = `TEST-${testId}-Rating Brewery`;
@@ -179,8 +201,10 @@ test.describe('Beer Management App - Integration Tests', () => {
     });
   });*/
 
-  test.describe('Editing a Beer', () => {
-    test('should edit an existing beer', async ({ page, request }) => {
+  test.describe('Editing a Beer', () => 
+  {
+    test('should edit an existing beer', async ({ page, request }) => 
+    {
       const testId = generateTestId();
       const originalBeerName = `TEST-${testId}-Original IPA`;
       const originalBrewery = `TEST-${testId}-Original Brewery`;
@@ -222,15 +246,19 @@ test.describe('Beer Management App - Integration Tests', () => {
     });
   });
 
-  test.describe('Deleting a Beer', () => {
-    test('should delete a beer with confirmation', async ({ page }) => {
+  test.describe('Deleting a Beer', () => 
+  {
+    test('should delete a beer with confirmation', async ({ page }) => 
+    {
       // This test assumes there's at least one beer in the list
       const deleteButtons = page.getByRole('button', { name: /delete/i });
       const count = await deleteButtons.count();
       
-      if (count > 0) {
+      if (count > 0) 
+      {
         // Set up dialog handler for confirmation
-        page.once('dialog', dialog => {
+        page.once('dialog', dialog => 
+        {
           expect(dialog.message()).toContain('Are you sure');
           dialog.accept();
         });
@@ -243,21 +271,26 @@ test.describe('Beer Management App - Integration Tests', () => {
         
         // Button count should be reduced (if there were multiple) or empty state shown
         // This is a basic check - actual implementation may vary
-      } else {
+      }
+      else 
+      {
         test.skip();
       }
     });
 
-    test('should cancel deletion when user cancels confirmation', async ({ page }) => {
+    test('should cancel deletion when user cancels confirmation', async ({ page }) => 
+    {
       const deleteButtons = page.getByRole('button', { name: /delete/i });
       const count = await deleteButtons.count();
       
-      if (count > 0) {
+      if (count > 0) 
+      {
         // Store initial count
         const initialCount = await deleteButtons.count();
         
         // Set up dialog handler to cancel
-        page.once('dialog', dialog => {
+        page.once('dialog', dialog => 
+        {
           dialog.dismiss();
         });
         
@@ -269,19 +302,24 @@ test.describe('Beer Management App - Integration Tests', () => {
         // Count should remain the same
         const finalCount = await deleteButtons.count();
         expect(finalCount).toBe(initialCount);
-      } else {
+      }
+      else 
+      {
         test.skip();
       }
     });
   });
 
-  test.describe('Marking Beer as Drank', () => {
-    test('should toggle drank status', async ({ page }) => {
+  test.describe('Marking Beer as Drank', () => 
+  {
+    test('should toggle drank status', async ({ page }) => 
+    {
       // Look for "Mark as Drank" or "Mark as Not Drank" buttons
       const markButtons = page.getByRole('button', { name: /mark as (drank|not drank)/i });
       const count = await markButtons.count();
       
-      if (count > 0) {
+      if (count > 0) 
+      {
         const buttonText = await markButtons.first().textContent();
         await markButtons.first().click();
         
@@ -293,14 +331,18 @@ test.describe('Beer Management App - Integration Tests', () => {
         
         // The text should have changed (unless there are multiple buttons)
         expect(newButtonText).toBeTruthy();
-      } else {
+      }
+      else 
+      {
         test.skip();
       }
     });
   });
 
-  test.describe('Beer Statistics', () => {
-    test('should display statistics section', async ({ page }) => {
+  test.describe('Beer Statistics', () => 
+  {
+    test('should display statistics section', async ({ page }) => 
+    {
       // Look for stats section (checking for common stat labels)
       const statsSection = page.locator('text=/total|drank|pending|rating/i').first();
       
@@ -313,8 +355,10 @@ test.describe('Beer Management App - Integration Tests', () => {
     });
   });
 
-  test.describe('Error Handling', () => {
-    test('should display error message on API failure', async ({ page, context }) => {
+  test.describe('Error Handling', () => 
+  {
+    test('should display error message on API failure', async ({ page, context }) => 
+    {
       // Intercept and block API requests to simulate failure
       await page.route('**/api/beers', route => route.abort());
       
@@ -330,15 +374,18 @@ test.describe('Beer Management App - Integration Tests', () => {
     });
   });
 
-  test.describe('Responsive Design', () => {
-    test('should work on mobile viewport', async ({ page }) => {
+  test.describe('Responsive Design', () => 
+  {
+    test('should work on mobile viewport', async ({ page }) => 
+    {
       await page.setViewportSize({ width: 375, height: 667 });
       
       await expect(page.getByRole('heading', { name: /beer management/i })).toBeVisible();
       await expect(page.getByRole('button', { name: /add new beer/i })).toBeVisible();
     });
 
-    test('should work on tablet viewport', async ({ page }) => {
+    test('should work on tablet viewport', async ({ page }) => 
+    {
       await page.setViewportSize({ width: 768, height: 1024 });
       
       await expect(page.getByRole('heading', { name: /beer management/i })).toBeVisible();

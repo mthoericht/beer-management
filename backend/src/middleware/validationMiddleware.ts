@@ -7,17 +7,23 @@ import { z } from 'zod';
 
 export function validateBody<T>(schema: z.ZodSchema<T>) 
 {
-  return (req: Request, res: Response, next: NextFunction) => {
+  return (req: Request, res: Response, next: NextFunction) => 
+  {
 
-    try {
+    try 
+    {
       // Validierung und Parsing des Request Body
       req.body = schema.parse(req.body);
       next();
       
-    } catch (error) {
-      if (error instanceof z.ZodError) {
+    }
+    catch (error) 
+    {
+      if (error instanceof z.ZodError) 
+      {
         // Strukturierte Fehlerantwort
-        const errorMessage = error.issues.map((err) => {
+        const errorMessage = error.issues.map((err) => 
+        {
           const path = err.path.join('.');
           return `${path}: ${err.message}`;
         }).join(', ');
@@ -28,7 +34,9 @@ export function validateBody<T>(schema: z.ZodSchema<T>)
           message: errorMessage,
           details: error.issues,
         });
-      } else {
+      }
+      else 
+      {
         next(error);
       }
     }
@@ -41,15 +49,21 @@ export function validateBody<T>(schema: z.ZodSchema<T>)
 
 export function validateParams<T>(schema: z.ZodSchema<T>) 
 {
-  return (req: Request, res: Response, next: NextFunction) => {
-    try {
+  return (req: Request, res: Response, next: NextFunction) => 
+  {
+    try 
+    {
       // Validierung der URL Parameter
       const parsed = schema.parse(req.params) as typeof req.params;
       Object.assign(req.params, parsed);
       next();
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const errorMessage = error.issues.map((err) => {
+    }
+    catch (error) 
+    {
+      if (error instanceof z.ZodError) 
+      {
+        const errorMessage = error.issues.map((err) => 
+        {
           const path = err.path.join('.');
           return `${path}: ${err.message}`;
         }).join(', ');
@@ -60,7 +74,9 @@ export function validateParams<T>(schema: z.ZodSchema<T>)
           message: errorMessage,
           details: error.issues,
         });
-      } else {
+      }
+      else 
+      {
         next(error);
       }
     }
@@ -74,14 +90,20 @@ export function validateParams<T>(schema: z.ZodSchema<T>)
 export function validateQuery<T>(schema: z.ZodSchema<T>) 
 {
 
-  return (req: Request, res: Response, next: NextFunction) => {
-    try {
+  return (req: Request, res: Response, next: NextFunction) => 
+  {
+    try 
+    {
       const parsed = schema.parse(req.query) as typeof req.query;
       Object.assign(req.query, parsed);
       next();
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const errorMessage = error.issues.map((err) => {
+    }
+    catch (error) 
+    {
+      if (error instanceof z.ZodError) 
+      {
+        const errorMessage = error.issues.map((err) => 
+        {
           const path = err.path.join('.');
           return `${path}: ${err.message}`;
         }).join(', ');
@@ -92,7 +114,9 @@ export function validateQuery<T>(schema: z.ZodSchema<T>)
           message: errorMessage,
           details: error.issues,
         });
-      } else {
+      }
+      else 
+      {
         next(error);
       }
     }

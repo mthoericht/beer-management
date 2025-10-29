@@ -28,7 +28,8 @@ class ApiService
       }
 
       return data;
-    } catch (error) 
+    }
+    catch (error) 
     {
       return {
         success: false,

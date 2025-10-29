@@ -3,17 +3,22 @@ import { Beer } from '../models/Beer';
 import { IApiResponse, IBeerStats } from '../types';
 import { BeerInput, BeerUpdate } from '../validators/beerSchemas';
 
-export class BeerController {
+export class BeerController 
+{
   // Get all beers
-  static async getAllBeers(req: Request, res: Response): Promise<void> {
-    try {
+  static async getAllBeers(req: Request, res: Response): Promise<void> 
+  {
+    try 
+    {
       const beers = await Beer.find().sort({ dateAdded: -1 });
       const response: IApiResponse = {
         success: true,
         data: beers
       };
       res.json(response);
-    } catch (error) {
+    }
+    catch (error) 
+    {
       const response: IApiResponse = {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'
@@ -23,12 +28,15 @@ export class BeerController {
   }
 
   // Get single beer by ID
-  static async getBeerById(req: Request, res: Response): Promise<void> {
-    try {
+  static async getBeerById(req: Request, res: Response): Promise<void> 
+  {
+    try 
+    {
       const { id } = req.params;
       const beer = await Beer.findById(id);
       
-      if (!beer) {
+      if (!beer) 
+      {
         const response: IApiResponse = {
           success: false,
           error: 'Beer not found'
@@ -42,7 +50,9 @@ export class BeerController {
         data: beer
       };
       res.json(response);
-    } catch (error) {
+    }
+    catch (error) 
+    {
       const response: IApiResponse = {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'
@@ -52,8 +62,10 @@ export class BeerController {
   }
 
   // Create new beer
-  static async createBeer(req: Request<{}, {}, BeerInput>, res: Response): Promise<void> {
-    try {
+  static async createBeer(req: Request<{}, {}, BeerInput>, res: Response): Promise<void> 
+  {
+    try 
+    {
       const beerData: BeerInput = req.body;
       const beer = new Beer(beerData);
       await beer.save();
@@ -64,7 +76,9 @@ export class BeerController {
         message: 'Beer created successfully'
       };
       res.status(201).json(response);
-    } catch (error) {
+    }
+    catch (error) 
+    {
       const response: IApiResponse = {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'
@@ -74,8 +88,10 @@ export class BeerController {
   }
 
   // Update beer by ID
-  static async updateBeer(req: Request<{ id: string }, {}, BeerUpdate>, res: Response): Promise<void> {
-    try {
+  static async updateBeer(req: Request<{ id: string }, {}, BeerUpdate>, res: Response): Promise<void> 
+  {
+    try 
+    {
       const { id } = req.params;
       const updateData: BeerUpdate = req.body;
 
@@ -85,7 +101,8 @@ export class BeerController {
         { new: true, runValidators: true }
       );
 
-      if (!beer) {
+      if (!beer) 
+      {
         const response: IApiResponse = {
           success: false,
           error: 'Beer not found'
@@ -102,7 +119,8 @@ export class BeerController {
 
       res.json(response);
 
-    } catch (error) 
+    }
+    catch (error) 
     {
       const response: IApiResponse = {
         success: false,
@@ -113,12 +131,15 @@ export class BeerController {
   }
 
   // Delete beer by ID
-  static async deleteBeer(req: Request, res: Response): Promise<void> {
-    try {
+  static async deleteBeer(req: Request, res: Response): Promise<void> 
+  {
+    try 
+    {
       const { id } = req.params;
       const beer = await Beer.findByIdAndDelete(id);
 
-      if (!beer) {
+      if (!beer) 
+      {
         const response: IApiResponse = {
           success: false,
           error: 'Beer not found'
@@ -132,7 +153,9 @@ export class BeerController {
         message: 'Beer deleted successfully'
       };
       res.json(response);
-    } catch (error) {
+    }
+    catch (error) 
+    {
       const response: IApiResponse = {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'
@@ -197,7 +220,9 @@ export class BeerController {
         data: stats
       };
       res.json(response);
-    } catch (error) {
+    }
+    catch (error) 
+    {
       const response: IApiResponse = {
         success: false,
         error: error instanceof Error ? error.message : 'Unknown error occurred'

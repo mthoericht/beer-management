@@ -10,6 +10,7 @@ frontend/dist/
 # Database
 data/db/
 *.log
+logs.sh
 
 # Test results
 test-results/

@@ -41,6 +41,7 @@ const BeerList: React.FC<BeerListProps> = ({ beers, onDelete, onEdit, onMarkAsDr
         >
           <div className="flex justify-between items-start">
             <div className="flex-1">
+              {/* if it should be hidden, use "style={{ display: beer.drank ? 'none' : 'block' }}" */}
               <div className="flex items-center gap-2 mb-2">
                 <h3 className={`text-lg font-semibold ${beer.drank ? 'line-through text-gray-500' : 'text-gray-800'}`}>
                   {beer.name}

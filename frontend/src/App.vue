@@ -62,6 +62,7 @@ import BeerForm from './components/BeerForm.vue'
 import BeerStats from './components/BeerStats.vue'
 import LoadingSpinner from './components/LoadingSpinner.vue'
 import { BeerManager } from './services/BeerManager'
+import { Beer, BeerInput } from './types/BeerInterfaces'
 
 const manager = new BeerManager()
 
@@ -72,10 +73,10 @@ const showForm = manager.showForm
 const editingBeer = manager.editingBeer
 
 const fetchBeers = () => manager.fetchBeers()
-const handleSaveBeer = (beerData: any) => manager.handleSaveBeer(beerData)
+const handleSaveBeer = (beerData: BeerInput) => manager.handleSaveBeer(beerData)
 const handleMarkAsDrank = (id: string) => manager.handleMarkAsDrank(id)
 const handleDeleteBeer = (id: string) => manager.handleDeleteBeer(id)
-const handleEditBeer = (beer: any) => manager.handleEditBeer(beer)
+const handleEditBeer = (beer: Beer) => manager.handleEditBeer(beer)
 const handleCancelForm = () => manager.handleCancelForm()
 
 onMounted(() => {

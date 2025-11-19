@@ -88,6 +88,12 @@ const App: React.FC = () =>
   // Delete beer
   const handleDeleteBeer = async (id: string): Promise<void> => 
   {
+    // Confirm deletion
+    if (!window.confirm('Are you sure you want to delete this beer?')) 
+    {
+      return;
+    }
+    
     try 
     {
       const response = await apiService.deleteBeer(id);

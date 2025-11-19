@@ -1,7 +1,8 @@
 import React from 'react';
 import { BeerStatsProps } from '../types';
 
-const BeerStats: React.FC<BeerStatsProps> = ({ beers }) => {
+const BeerStats: React.FC<BeerStatsProps> = ({ beers }) => 
+{
   const totalBeers = beers.length;
   const drankBeers = beers.filter(beer => beer.drank).length;
   const pendingBeers = totalBeers - drankBeers;
@@ -13,12 +14,14 @@ const BeerStats: React.FC<BeerStatsProps> = ({ beers }) => {
   const styles = [...new Set(beers.map(beer => beer.style))];
   const breweries = [...new Set(beers.map(beer => beer.brewery))];
 
-  const topStyle = styles.reduce((top, style) => {
+  const topStyle = styles.reduce((top, style) => 
+  {
     const count = beers.filter(beer => beer.style === style).length;
     return count > (top.count || 0) ? { style, count } : top;
   }, {} as { style: string; count: number });
 
-  const topBrewery = breweries.reduce((top, brewery) => {
+  const topBrewery = breweries.reduce((top, brewery) => 
+  {
     const count = beers.filter(beer => beer.brewery === brewery).length;
     return count > (top.count || 0) ? { brewery, count } : top;
   }, {} as { brewery: string; count: number });

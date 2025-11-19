@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BeerFormProps, BeerInput } from '../types';
 
-const BeerForm: React.FC<BeerFormProps> = ({ beer, onSave, onCancel }) => {
+const BeerForm: React.FC<BeerFormProps> = ({ beer, onSave, onCancel }) => 
+{
   const [formData, setFormData] = useState<BeerInput>({
     name: '',
     brewery: '',
@@ -12,8 +13,10 @@ const BeerForm: React.FC<BeerFormProps> = ({ beer, onSave, onCancel }) => {
     drank: false,
   });
 
-  useEffect(() => {
-    if (beer) {
+  useEffect(() => 
+  {
+    if (beer) 
+    {
       setFormData({
         name: beer.name,
         brewery: beer.brewery,
@@ -26,23 +29,26 @@ const BeerForm: React.FC<BeerFormProps> = ({ beer, onSave, onCancel }) => {
     }
   }, [beer]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>): void => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>): void => 
+  {
     const { name, value, type } = e.target;
     const checked = (e.target as HTMLInputElement).checked;
     
     setFormData(prev => ({
       ...prev,
       [name]: type === 'checkbox' ? checked : 
-              type === 'number' ? parseFloat(value) || 0 : 
-              value
+        type === 'number' ? parseFloat(value) || 0 : 
+          value
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => 
+  {
     e.preventDefault();
     
     // Validate required fields
-    if (!formData.name || !formData.brewery || !formData.style || formData.abv <= 0) {
+    if (!formData.name || !formData.brewery || !formData.style || formData.abv <= 0) 
+    {
       alert('Please fill in all required fields');
       return;
     }

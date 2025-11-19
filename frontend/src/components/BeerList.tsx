@@ -1,8 +1,10 @@
 import React from 'react';
 import { BeerListProps, Beer } from '../types';
 
-const BeerList: React.FC<BeerListProps> = ({ beers, onDelete, onEdit, onMarkAsDrank }) => {
-  if (beers.length === 0) {
+const BeerList: React.FC<BeerListProps> = ({ beers, onDelete, onEdit, onMarkAsDrank }) => 
+{
+  if (beers.length === 0) 
+  {
     return (
       <div className="text-center py-8">
         <div className="text-gray-400 text-6xl mb-4">🍺</div>
@@ -12,12 +14,15 @@ const BeerList: React.FC<BeerListProps> = ({ beers, onDelete, onEdit, onMarkAsDr
     );
   }
 
-  const formatDate = (dateString: string): string => {
+  const formatDate = (dateString: string): string => 
+  {
     return new Date(dateString).toLocaleDateString();
   };
 
-  const renderStars = (rating?: number): React.JSX.Element => {
-    if (!rating) {
+  const renderStars = (rating?: number): React.JSX.Element => 
+  {
+    if (!rating) 
+    {
       return <span className="ml-1 text-gray-400">Not rated</span>;
     }
     

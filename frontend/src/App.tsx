@@ -5,7 +5,8 @@ import BeerStats from './components/BeerStats';
 import { Beer, BeerInput, AppState } from './types';
 import { apiService } from './utils/api';
 
-const App: React.FC = () => {
+const App: React.FC = () => 
+{
   const [state, setState] = useState<AppState>({
     beers: [],
     loading: 'idle',
@@ -15,25 +16,32 @@ const App: React.FC = () => {
   });
 
   // Fetch beers from API
-  const fetchBeers = async (): Promise<void> => {
-    try {
+  const fetchBeers = async (): Promise<void> => 
+  {
+    try 
+    {
       setState(prev => ({ ...prev, loading: 'loading', error: null }));
       const response = await apiService.getBeers();
       
-      if (response.success && response.data) {
+      if (response.success && response.data) 
+      {
         setState(prev => ({ 
           ...prev, 
           beers: response.data!, 
           loading: 'success' 
         }));
-      } else {
+      }
+      else 
+      {
         setState(prev => ({ 
           ...prev, 
           error: response.error || 'Failed to fetch beers',
           loading: 'error'
         }));
       }
-    } catch (error) {
+    }
+    catch (error) 
+    {
       setState(prev => ({ 
         ...prev, 
         error: error instanceof Error ? error.message : 'Unknown error',
@@ -43,26 +51,33 @@ const App: React.FC = () => {
   };
 
   // Add or update beer
-  const handleSaveBeer = async (beerData: BeerInput): Promise<void> => {
-    try {
+  const handleSaveBeer = async (beerData: BeerInput): Promise<void> => 
+  {
+    try 
+    {
       const response = state.editingBeer
         ? await apiService.updateBeer(state.editingBeer._id, beerData)
         : await apiService.createBeer(beerData);
 
-      if (response.success) {
+      if (response.success) 
+      {
         await fetchBeers();
         setState(prev => ({ 
           ...prev, 
           showForm: false, 
           editingBeer: undefined 
         }));
-      } else {
+      }
+      else 
+      {
         setState(prev => ({ 
           ...prev, 
           error: response.error || 'Failed to save beer' 
         }));
       }
-    } catch (error) {
+    }
+    catch (error) 
+    {
       setState(prev => ({ 
         ...prev, 
         error: error instanceof Error ? error.message : 'Unknown error' 
@@ -71,19 +86,26 @@ const App: React.FC = () => {
   };
 
   // Delete beer
-  const handleDeleteBeer = async (id: string): Promise<void> => {
-    try {
+  const handleDeleteBeer = async (id: string): Promise<void> => 
+  {
+    try 
+    {
       const response = await apiService.deleteBeer(id);
       
-      if (response.success) {
+      if (response.success) 
+      {
         await fetchBeers();
-      } else {
+      }
+      else 
+      {
         setState(prev => ({ 
           ...prev, 
           error: response.error || 'Failed to delete beer' 
         }));
       }
-    } catch (error) {
+    }
+    catch (error) 
+    {
       setState(prev => ({ 
         ...prev, 
         error: error instanceof Error ? error.message : 'Unknown error' 
@@ -92,8 +114,10 @@ const App: React.FC = () => {
   };
 
   // Mark beer as drank
-  const handleMarkAsDrank = async (id: string): Promise<void> => {
-    try {
+  const handleMarkAsDrank = async (id: string): Promise<void> => 
+  {
+    try 
+    {
       const beer = state.beers.find(b => b._id === id);
       if (!beer) return;
 
@@ -105,15 +129,20 @@ const App: React.FC = () => {
 
       const response = await apiService.updateBeer(id, updatedBeer);
       
-      if (response.success) {
+      if (response.success) 
+      {
         await fetchBeers();
-      } else {
+      }
+      else 
+      {
         setState(prev => ({ 
           ...prev, 
           error: response.error || 'Failed to update beer' 
         }));
       }
-    } catch (error) {
+    }
+    catch (error) 
+    {
       setState(prev => ({ 
         ...prev, 
         error: error instanceof Error ? error.message : 'Unknown error' 
@@ -122,7 +151,8 @@ const App: React.FC = () => {
   };
 
   // Edit beer
-  const handleEditBeer = (beer: Beer): void => {
+  const handleEditBeer = (beer: Beer): void => 
+  {
     setState(prev => ({ 
       ...prev, 
       editingBeer: beer, 
@@ -131,7 +161,8 @@ const App: React.FC = () => {
   };
 
   // Cancel form
-  const handleCancelForm = (): void => {
+  const handleCancelForm = (): void => 
+  {
     setState(prev => ({ 
       ...prev, 
       showForm: false, 
@@ -139,11 +170,13 @@ const App: React.FC = () => {
     }));
   };
 
-  useEffect(() => {
+  useEffect(() => 
+  {
     fetchBeers();
   }, []);
 
-  if (state.loading === 'loading') {
+  if (state.loading === 'loading') 
+  {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">

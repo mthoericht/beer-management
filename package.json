@@ -16,7 +16,7 @@
     "stop-db": "./stop-db.sh",
     "restart-db": "./restart-db.sh",
     "test-api": "curl http://localhost:5001/api/health",
-    "test": "playwright test",    
+    "test": "playwright test",
     "test:unit": "playwright test --project=api-unit",
     "test:integration": "playwright test --project=integration",
     "test:integration:headed": "playwright test --project=integration --headed",
@@ -25,11 +25,18 @@
     "status": "npm run logs",
     "logs": "./logs.sh"
   },
-  "keywords": ["beer", "mongodb", "react", "vite", "tailwind"],
+  "keywords": [
+    "beer",
+    "mongodb",
+    "react",
+    "vite",
+    "tailwind"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@playwright/test": "^1.48.0",
+    "@types/node": "^24.10.1",
     "concurrently": "^8.2.2"
   }
 }

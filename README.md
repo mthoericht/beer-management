@@ -1,4 +1,4 @@
-# 🍺 Beer Management Application
+# Beer Management Application
 
 A simple and elegant beer drinking list application built with Vue.js, TypeScript, Tailwind CSS, Node.js, Express, and MongoDB.
 
@@ -27,54 +27,6 @@ A simple and elegant beer drinking list application built with Vue.js, TypeScrip
 - **Mongoose** - MongoDB object modeling
 - **TypeScript** - Typed JavaScript
 
-## Project Structure
-
-```
-beer-management/
-├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   │   └── BeerController.ts
-│   │   ├── models/
-│   │   │   └── Beer.ts
-│   │   ├── routes/
-│   │   │   └── beerRoutes.ts
-│   │   ├── types/
-│   │   │   └── index.ts
-│   │   └── server.ts
-│   ├── dist/           # Compiled JavaScript
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── nodemon.json
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── BeerList.vue
-│   │   │   ├── BeerForm.vue
-│   │   │   ├── BeerStats.vue
-│   │   │   └── LoadingSpinner.vue
-│   │   ├── utils/
-│   │   │   └── api.ts
-│   │   ├── types/
-│   │   │   └── index.ts
-│   │   ├── App.vue
-│   │   ├── main.ts
-│   │   └── index.css
-│   ├── public/
-│   ├── package.json
-│   ├── tsconfig.json
-│   ├── tailwind.config.js
-│   ├── postcss.config.js
-│   ├── vite.config.ts
-│   └── index.html
-├── data/
-│   └── db/             # MongoDB data directory
-├── start-db.sh          # Start MongoDB and backend
-├── stop-db.sh           # Stop all services
-├── restart-db.sh        # Restart all services
-├── logs.sh              # View service status
-└── package.json
-```
 
 ## Prerequisites
 
@@ -298,26 +250,6 @@ The application uses MongoDB with Mongoose. The database file is stored locally 
    - Frontend: Vite will suggest an alternative port automatically
    - Database: MongoDB uses port 27017
 
-3. **TypeScript Errors**
-   - Run `npm run build` in the backend to compile TypeScript
-   - Check `tsconfig.json` for configuration
-
-4. **CORS Issues**
-   - The backend is configured to allow CORS from the frontend
-   - Check CORS configuration in `backend/src/server.ts`
-
-5. **Build Issues**
-   - Ensure all dependencies are installed: `npm run install-all`
-   - Clear `node_modules` and reinstall if needed: `npm run fresh-install`
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -328,12 +260,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Beer recommendations based on preferences
 - Social features (sharing beer lists)
 - Photo uploads for beer labels
-- Integration with beer databases (Untappd, BeerAdvocate)
-- Mobile app with React Native/Vue Native
 - Advanced filtering and search
-- Export/import functionality
 - Dark mode support
 
 ---
-
-Happy beer tracking! 🍺

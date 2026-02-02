@@ -8,7 +8,7 @@ backend/dist/
 frontend/dist/
 
 # Database
-data/db/
+data/
 *.log
 logs.sh
 

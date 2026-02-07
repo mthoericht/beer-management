@@ -49,10 +49,10 @@ export default defineConfig({
 
   // Configure projects for different test types
   projects: [
-    // API Unit Tests
+    // API Tests (HTTP requests to backend - requires backend running)
     {
-      name: 'api-unit',
-      testMatch: /unit\/.*\.spec\.ts/,
+      name: 'api',
+      testMatch: /api\/.*\.spec\.ts/,
       use: {
         baseURL: 'http://localhost:5001/api',
       },
@@ -68,7 +68,7 @@ export default defineConfig({
       },
     },
 
-    // Alternative browsers for integration tests：
+    // Alternative browsers for integration tests
     {
       name: 'integration-firefox',
       testMatch: /integration\/.*\.spec\.ts/,

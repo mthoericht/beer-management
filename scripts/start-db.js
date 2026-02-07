@@ -14,46 +14,62 @@ const PROJECT_ROOT = path.resolve(__dirname, '..');
 const DATA_DIR = path.join(PROJECT_ROOT, 'data', 'db');
 const BACKEND_DIR = path.join(PROJECT_ROOT, 'backend');
 
-function sleep(ms) {
+function sleep(ms) 
+{
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function isMongoRunning() {
-  try {
+function isMongoRunning() 
+{
+  try 
+  {
     execSync('pgrep -x mongod', { encoding: 'utf8' });
     return true;
-  } catch {
+  }
+  catch 
+  {
     return false;
   }
 }
 
-function isBackendRunning() {
-  try {
+function isBackendRunning() 
+{
+  try 
+  {
     execSync('lsof -ti:5001', { encoding: 'utf8' });
     return true;
-  } catch {
+  }
+  catch 
+  {
     return false;
   }
 }
 
-function log(msg) {
+function log(msg) 
+{
   console.log(msg);
 }
 
 // Check if MongoDB is installed
-function checkMongoInstalled() {
-  try {
+function checkMongoInstalled() 
+{
+  try 
+  {
     execSync('which mongod', { encoding: 'utf8' });
     return true;
-  } catch {
+  }
+  catch 
+  {
     return false;
   }
 }
 
-async function main() {
+async function main() 
+{
   log('🍺 Starting Beer Management Database...');
 
-  if (!checkMongoInstalled()) {
+  if (!checkMongoInstalled()) 
+  {
     log('❌ MongoDB is not installed!');
     log('Please install MongoDB:');
     log('  macOS: brew install mongodb-community');
@@ -62,12 +78,16 @@ async function main() {
     process.exit(1);
   }
 
-  if (isMongoRunning()) {
+  if (isMongoRunning()) 
+  {
     log('✅ MongoDB is already running');
-  } else {
+  }
+  else 
+  {
     log('🚀 Starting MongoDB...');
 
-    if (!fs.existsSync(DATA_DIR)) {
+    if (!fs.existsSync(DATA_DIR)) 
+    {
       fs.mkdirSync(DATA_DIR, { recursive: true });
     }
 
@@ -82,23 +102,29 @@ async function main() {
     // Wait for MongoDB to start
     let attempts = 0;
     const maxAttempts = 15;
-    while (attempts < maxAttempts) {
+    while (attempts < maxAttempts) 
+    {
       await sleep(500);
-      if (isMongoRunning()) {
+      if (isMongoRunning()) 
+      {
         log('✅ MongoDB started successfully on port 27017');
         break;
       }
       attempts++;
-      if (attempts >= maxAttempts) {
+      if (attempts >= maxAttempts) 
+      {
         log('❌ Failed to start MongoDB');
         process.exit(1);
       }
     }
   }
 
-  if (isBackendRunning()) {
+  if (isBackendRunning()) 
+  {
     log('✅ Backend server is already running on port 5001');
-  } else {
+  }
+  else 
+  {
     log('🚀 Starting backend server...');
 
     const isWindows = process.platform === 'win32';
@@ -125,7 +151,8 @@ async function main() {
   log('To view status, run: npm run status');
 }
 
-main().catch((err) => {
+main().catch((err) => 
+{
   console.error(err);
   process.exit(1);
 });

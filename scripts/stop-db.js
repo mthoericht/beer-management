@@ -7,31 +7,42 @@
 
 const { execSync } = require('child_process');
 
-function log(msg) {
+function log(msg) 
+{
   console.log(msg);
 }
 
-function killBackend() {
-  try {
+function killBackend() 
+{
+  try 
+  {
     const pids = execSync('lsof -ti:5001', { encoding: 'utf8' }).trim();
-    if (pids) {
+    if (pids) 
+    {
       execSync(`kill -9 ${pids}`);
       return true;
     }
-  } catch {
+  }
+  catch 
+  {
     // Port not in use
   }
   return false;
 }
 
-function killMongo() {
-  try {
+function killMongo() 
+{
+  try 
+  {
     const pids = execSync('pgrep -x mongod', { encoding: 'utf8' }).trim();
-    if (pids) {
+    if (pids) 
+    {
       execSync(`kill -9 ${pids}`);
       return true;
     }
-  } catch {
+  }
+  catch 
+  {
     // MongoDB not running
   }
   return false;
@@ -39,15 +50,21 @@ function killMongo() {
 
 log('🛑 Stopping Beer Management services...');
 
-if (killBackend()) {
+if (killBackend()) 
+{
   log('✅ Backend server stopped');
-} else {
+}
+else 
+{
   log('ℹ️  Backend server was not running');
 }
 
-if (killMongo()) {
+if (killMongo()) 
+{
   log('✅ MongoDB stopped');
-} else {
+}
+else 
+{
   log('ℹ️  MongoDB was not running');
 }
 

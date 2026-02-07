@@ -41,10 +41,32 @@ npm run dev              # Frontend + backend concurrently
 npm run client           # Frontend only
 npm run server           # Backend only
 npm run build            # Production build (frontend)
-npm run start-db         # Start MongoDB
-npm run stop-db          # Stop MongoDB
+npm run start-db         # Start MongoDB + backend
+npm run stop-db          # Stop MongoDB + backend
+npm run status           # Show DB/backend status
 npm run stop-servers     # Kill all running servers
 ```
+
+## Testing
+
+Tests use **Vitest** (unit) and **Playwright** (API + E2E).
+
+| Command | Description |
+|---------|-------------|
+| `npm test` | Run all tests (unit + API + integration) |
+| `npm run test:unit` | Unit tests only (no server needed) |
+| `npm run test:unit:watch` | Unit tests in watch mode |
+| `npm run test:api` | API tests (requires backend on port 5001) |
+| `npm run test:integration` | E2E tests (requires backend + frontend) |
+| `npm run test:ui` | Playwright interactive UI |
+| `npm run test:report` | Show last test report |
+
+**Structure:**
+- `tests/unit/` – Vitest: pure logic (BeerStatsHelper, beerSchemas validation)
+- `tests/api/` – Playwright: REST API against running backend
+- `tests/integration/` – Playwright: E2E UI flows
+
+**Prerequisites:** API tests need `npm run start-db`; integration tests need `npm run start-db` and `npm run client`.
 
 ## API
 

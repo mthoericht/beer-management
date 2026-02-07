@@ -39,9 +39,6 @@ export class BeerStatsHelper
     const topStyle = this.findTopStyle(beers, totalBeers);
     const topBrewery = this.findTopBrewery(beers, totalBeers);
 
-    console.log('uniqueStyles', this.getUniqueStyles(beers));
-    console.log('uniqueBreweries', this.getUniqueBreweries(beers));
-
     return {
       totalBeers,
       drankBeers,

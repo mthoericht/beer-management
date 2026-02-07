@@ -7,24 +7,33 @@
 
 const { execSync } = require('child_process');
 
-function log(msg) {
+function log(msg) 
+{
   console.log(msg);
 }
 
-function getMongoStatus() {
-  try {
+function getMongoStatus() 
+{
+  try 
+  {
     const pid = execSync('pgrep -x mongod', { encoding: 'utf8' }).trim();
     return { running: true, pid };
-  } catch {
+  }
+  catch 
+  {
     return { running: false };
   }
 }
 
-function getBackendStatus() {
-  try {
+function getBackendStatus() 
+{
+  try 
+  {
     const pid = execSync('lsof -ti:5001', { encoding: 'utf8' }).trim();
     return { running: true, pid };
-  } catch {
+  }
+  catch 
+  {
     return { running: false };
   }
 }
@@ -33,16 +42,22 @@ log('📋 Beer Management Logs');
 log('========================');
 
 const mongoStatus = getMongoStatus();
-if (mongoStatus.running) {
+if (mongoStatus.running) 
+{
   log(`📊 MongoDB Status: ✅ Running (PID: ${mongoStatus.pid})`);
-} else {
+}
+else 
+{
   log('📊 MongoDB Status: ❌ Not running');
 }
 
 const backendStatus = getBackendStatus();
-if (backendStatus.running) {
+if (backendStatus.running) 
+{
   log(`🔧 Backend Status: ✅ Running (PID: ${backendStatus.pid})`);
-} else {
+}
+else 
+{
   log('🔧 Backend Status: ❌ Not running');
 }
 

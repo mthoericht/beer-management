@@ -1,0 +1,14 @@
+<script setup lang="ts">
+defineProps<{
+  as?: string
+}>()
+</script>
+
+<template>
+  <component
+    :is="as || 'div'"
+    class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border border-border"
+  >
+    <slot />
+  </component>
+</template>

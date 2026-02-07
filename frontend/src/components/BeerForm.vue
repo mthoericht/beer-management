@@ -1,134 +1,128 @@
 <template>
   <form @submit.prevent="handleSubmit" class="space-y-4">
-    <div>
-      <label for="name" class="block text-sm font-medium text-gray-700 mb-1">
-        Beer Name *
-      </label>
-      <input
-        type="text"
+    <div class="space-y-2">
+      <Label for-id="name">Name *</Label>
+      <Input
         id="name"
         name="name"
         v-model="formData.name"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        placeholder="e.g., IPA"
+        placeholder="e.g. Helles Lager"
         required
       />
     </div>
 
-    <div>
-      <label for="brewery" class="block text-sm font-medium text-gray-700 mb-1">
-        Brewery *
-      </label>
-      <input
-        type="text"
+    <div class="space-y-2">
+      <Label for-id="brewery">Brewery *</Label>
+      <Input
         id="brewery"
         name="brewery"
         v-model="formData.brewery"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        placeholder="e.g., Sierra Nevada"
+        placeholder="e.g. Augustiner"
         required
       />
     </div>
 
-    <div>
-      <label for="style" class="block text-sm font-medium text-gray-700 mb-1">
-        Style *
-      </label>
-      <input
-        type="text"
-        id="style"
-        name="style"
-        v-model="formData.style"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        placeholder="e.g., India Pale Ale"
-        required
-      />
+    <div class="grid grid-cols-2 gap-4">
+      <div class="space-y-2">
+        <Label for-id="style">Style *</Label>
+        <Input
+          id="style"
+          name="style"
+          v-model="formData.style"
+          placeholder="e.g. IPA"
+          required
+        />
+      </div>
+
+      <div class="space-y-2">
+        <Label for-id="abv">ABV (%) *</Label>
+        <Input
+          id="abv"
+          name="abv"
+          type="number"
+          v-model.number="formData.abv"
+          :min="0"
+          :max="100"
+          :step="0.1"
+          placeholder="5.0"
+          required
+        />
+      </div>
     </div>
 
-    <div>
-      <label for="abv" class="block text-sm font-medium text-gray-700 mb-1">
-        ABV (%) *
-      </label>
-      <input
-        type="number"
-        id="abv"
-        name="abv"
-        v-model.number="formData.abv"
-        min="0"
-        max="100"
-        step="0.1"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        placeholder="e.g., 6.5"
-        required
-      />
+    <div class="space-y-2">
+      <Label>Rating</Label>
+      <div class="flex gap-2 items-center">
+        <button
+          v-for="star in 5"
+          :key="star"
+          type="button"
+          :aria-label="`Rate ${star} star${star > 1 ? 's' : ''}`"
+          @click="handleRatingClick(star)"
+          @mouseenter="hoveredRating = star"
+          @mouseleave="hoveredRating = 0"
+          class="focus:outline-none"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            :fill="star <= (hoveredRating || formData.rating || 0) ? 'currentColor' : 'none'"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            :class="[
+              'transition-colors',
+              star <= (hoveredRating || formData.rating || 0)
+                ? 'text-amber-400'
+                : 'text-gray-300 hover:text-amber-200'
+            ]"
+          >
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+        </button>
+        <Button
+          v-if="formData.rating"
+          type="button"
+          variant="ghost"
+          size="sm"
+          @click="formData.rating = undefined"
+        >
+          Reset
+        </Button>
+      </div>
     </div>
 
-    <div>
-      <label for="rating" class="block text-sm font-medium text-gray-700 mb-1">
-        Rating (1-5)
-      </label>
-      <select
-        id="rating"
-        name="rating"
-        v-model.number="formData.rating"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      >
-        <option :value="undefined">Not rated</option>
-        <option :value="1">1 ⭐</option>
-        <option :value="2">2 ⭐⭐</option>
-        <option :value="3">3 ⭐⭐⭐</option>
-        <option :value="4">4 ⭐⭐⭐⭐</option>
-        <option :value="5">5 ⭐⭐⭐⭐⭐</option>
-      </select>
-    </div>
-
-    <div>
-      <label for="notes" class="block text-sm font-medium text-gray-700 mb-1">
-        Notes
-      </label>
-      <textarea
+    <div class="space-y-2">
+      <Label for-id="notes">Notes</Label>
+      <Textarea
         id="notes"
         name="notes"
         v-model="formData.notes"
-        rows="3"
-        class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-        placeholder="Tasting notes, thoughts, etc."
+        :rows="3"
+        placeholder="Additional notes about this beer..."
       />
     </div>
 
-    <div class="flex items-center">
-      <input
-        type="checkbox"
-        id="drank"
-        name="drank"
-        v-model="formData.drank"
-        class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-      />
-      <label for="drank" class="ml-2 block text-sm text-gray-700">
-        Already drank this beer
-      </label>
-    </div>
-
-    <div class="flex gap-3 pt-4">
-      <button
-        type="submit"
-        class="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200"
-      >
-        {{ beer ? 'Update Beer' : 'Add Beer' }}
-      </button>
-      <button
-        type="button"
-        @click="$emit('cancel')"
-        class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-2 px-4 rounded-md transition duration-200"
-      >
+    <div class="flex justify-end gap-3 pt-4">
+      <Button type="button" variant="outline" @click="$emit('cancel')">
         Cancel
-      </button>
+      </Button>
+      <Button type="submit">
+        {{ beer ? 'Update' : 'Add' }}
+      </Button>
     </div>
   </form>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
+import Button from './ui/Button.vue'
+import Input from './ui/Input.vue'
+import Label from './ui/Label.vue'
+import Textarea from './ui/Textarea.vue'
 import { BeerFormProps, BeerInput } from '../types/BeerInterfaces'
 
 const props = defineProps<BeerFormProps>()
@@ -138,6 +132,8 @@ const emit = defineEmits<{
   cancel: []
 }>()
 
+const hoveredRating = ref(0)
+
 const formData = ref<BeerInput>({
   name: '',
   brewery: '',
@@ -145,13 +141,14 @@ const formData = ref<BeerInput>({
   abv: 0,
   rating: undefined,
   notes: undefined,
-  drank: false,
 })
 
-watch(() => props.beer, (newBeer: BeerFormProps['beer']) => {
+const handleRatingClick = (rating: number) => {
+  formData.value.rating = rating
+}
 
-  if (newBeer) 
-  {
+watch(() => props.beer, (newBeer: BeerFormProps['beer']) => {
+  if (newBeer) {
     formData.value = {
       name: newBeer.name,
       brewery: newBeer.brewery,
@@ -159,21 +156,26 @@ watch(() => props.beer, (newBeer: BeerFormProps['beer']) => {
       abv: newBeer.abv,
       rating: newBeer.rating,
       notes: newBeer.notes,
-      drank: newBeer.drank,
+    }
+  } else {
+    formData.value = {
+      name: '',
+      brewery: '',
+      style: '',
+      abv: 0,
+      rating: undefined,
+      notes: undefined,
     }
   }
+  hoveredRating.value = 0
 }, { immediate: true })
 
-const handleSubmit = (): void => 
-{
-  // Validate required fields
-  if (!formData.value.name || !formData.value.brewery || !formData.value.style) 
-  {
+const handleSubmit = (): void => {
+  if (!formData.value.name || !formData.value.brewery || !formData.value.style) {
     alert('Please fill in all required fields')
     return
   }
 
-  // Convert numeric fields
   const beerData: BeerInput = {
     ...formData.value,
     abv: parseFloat(formData.value.abv.toString()),
@@ -183,4 +185,3 @@ const handleSubmit = (): void =>
   emit('save', beerData)
 }
 </script>
-

@@ -58,8 +58,6 @@ export interface BeerStats
 export interface BeerFormProps 
 {
   beer?: Beer | undefined;
-  onSave: (beerData: BeerInput) => Promise<void>;
-  onCancel: () => void;
 }
 
 export interface BeerListProps 

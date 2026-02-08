@@ -1,7 +1,7 @@
 {
   "name": "beer-management",
   "version": "1.0.0",
-  "description": "A simple beer drinking list application with MongoDB and React",
+  "description": "A simple beer drinking list application with MongoDB and Vue",
   "main": "index.js",
   "scripts": {
     "fresh-install": "npm run clean && npm run install-all",
@@ -20,7 +20,8 @@
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
     "test:integration": "playwright test --project=integration",
-    "test:e2e": "playwright test --project=e2e",
+    "test:e2e": "playwright test tests/e2e/",
+    "test:e2e-chrome": "playwright test --project=e2e-chrome",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",

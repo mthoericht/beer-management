@@ -52,47 +52,7 @@
 
     <div class="space-y-2">
       <Label>Rating</Label>
-      <div class="flex gap-2 items-center">
-        <button
-          v-for="star in 5"
-          :key="star"
-          type="button"
-          :aria-label="`Rate ${star} star${star > 1 ? 's' : ''}`"
-          @click="handleRatingClick(star)"
-          @mouseenter="hoveredRating = star"
-          @mouseleave="hoveredRating = 0"
-          class="focus:outline-none"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            :fill="star <= (hoveredRating || formData.rating || 0) ? 'currentColor' : 'none'"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            :class="[
-              'transition-colors',
-              star <= (hoveredRating || formData.rating || 0)
-                ? 'text-amber-400'
-                : 'text-gray-300 hover:text-amber-200'
-            ]"
-          >
-            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
-          </svg>
-        </button>
-        <Button
-          v-if="formData.rating"
-          type="button"
-          variant="ghost"
-          size="sm"
-          @click="formData.rating = undefined"
-        >
-          Reset
-        </Button>
-      </div>
+      <StarRating v-model="formData.rating" :interactive="true" />
     </div>
 
     <div class="space-y-2">
@@ -119,11 +79,12 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import Button from './ui/Button.vue'
-import Input from './ui/Input.vue'
-import Label from './ui/Label.vue'
-import Textarea from './ui/Textarea.vue'
-import { BeerFormProps, BeerInput } from '../types/BeerInterfaces'
+import Button from '../ui/Button.vue'
+import Input from '../ui/Input.vue'
+import Label from '../ui/Label.vue'
+import Textarea from '../ui/Textarea.vue'
+import StarRating from '../ui/StarRating.vue'
+import { BeerFormProps, BeerInput } from '../../types/BeerInterfaces'
 
 const props = defineProps<BeerFormProps>()
 
@@ -131,8 +92,6 @@ const emit = defineEmits<{
   save: [beerData: BeerInput]
   cancel: []
 }>()
-
-const hoveredRating = ref(0)
 
 const formData = ref<BeerInput>({
   name: '',
@@ -142,10 +101,6 @@ const formData = ref<BeerInput>({
   rating: undefined,
   notes: undefined,
 })
-
-const handleRatingClick = (rating: number) => {
-  formData.value.rating = rating
-}
 
 watch(() => props.beer, (newBeer: BeerFormProps['beer']) => {
   if (newBeer) {
@@ -167,7 +122,6 @@ watch(() => props.beer, (newBeer: BeerFormProps['beer']) => {
       notes: undefined,
     }
   }
-  hoveredRating.value = 0
 }, { immediate: true })
 
 const handleSubmit = (): void => {

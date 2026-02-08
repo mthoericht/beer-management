@@ -23,8 +23,10 @@ npx playwright test                 # All Playwright tests
 ## Code Conventions
 
 - **Vue components**: Composition API with `<script setup lang="ts">`, `<template>` first for feature components
-- **UI components** live in `frontend/src/components/ui/` — small, reusable primitives
-- **Feature components** live in `frontend/src/components/` — BeerList, BeerForm, BeerStats, etc.
+- **Icons** live in `frontend/src/components/icons/` — BeerIcon, SearchIcon, StarIcon
+- **Layout components** live in `frontend/src/components/layout/` — AppHeader, etc.
+- **UI components** live in `frontend/src/components/ui/` — small, reusable primitives (Button, Card, Dialog, Input, etc.)
+- **Feature components** live in `frontend/src/components/beer/` — BeerList, BeerForm, BeerStats, BeerCard, BeerFilters, BeerFormDialog
 - **Shared form field styles**: Use `fieldBase` from `frontend/src/utils/fieldClasses.ts` for Input, Select, Textarea
 - **Styling**: Tailwind CSS 3 utility classes; design tokens as CSS custom properties in `frontend/src/styles/theme.css`, mapped in `frontend/tailwind.config.js`
 - **No comments** unless code is complex and requires context

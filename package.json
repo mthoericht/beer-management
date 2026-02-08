@@ -15,13 +15,12 @@
     "start-db": "node scripts/start-db.js",
     "stop-db": "node scripts/stop-db.js",
     "restart-db": "node scripts/restart-db.js",
-    "test-api": "curl http://localhost:5001/api/health",
     "status": "node scripts/status.js",
     "test": "vitest run && playwright test",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
-    "test:api": "playwright test --project=api",
     "test:integration": "playwright test --project=integration",
+    "test:e2e": "playwright test --project=e2e",
     "test:ui": "playwright test --ui",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report",
@@ -39,12 +38,14 @@
   "license": "MIT",
   "devDependencies": {
     "@playwright/test": "^1.48.0",
+    "@types/express": "^5.0.6",
     "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^8.46.2",
     "@typescript-eslint/parser": "^8.46.2",
     "concurrently": "^8.2.2",
     "eslint": "^9.38.0",
     "globals": "^16.4.0",
-    "vitest": "^4.0.18"
+    "vitest": "^4.0.18",
+    "zod": "^4.3.6"
   }
 }

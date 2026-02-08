@@ -2,10 +2,10 @@ import { defineConfig, devices } from '@playwright/test';
 
 /**
  * Playwright configuration for Beer Management application
- * 
- * This configuration includes:
- * - Unit tests: API endpoint testing (tests/unit/)
- * - Integration tests: E2E UI testing (tests/integration/)
+ *
+ * - Unit tests: Vitest (tests/unit/) - no Playwright
+ * - Integration tests: API tests against backend (tests/integration/)
+ * - E2E tests: Browser UI tests (tests/e2e/)
  */
 export default defineConfig({
   testDir: './tests',
@@ -37,41 +37,35 @@ export default defineConfig({
   
   // Shared settings for all projects
   use: {
-    // Base URL for API tests
     baseURL: 'http://localhost:5001/api',
-    
-    // Collect trace when retrying the failed test
     trace: 'on-first-retry',
-    
-    // Screenshot on failure
     screenshot: 'only-on-failure',
   },
 
   // Configure projects for different test types
   projects: [
-    // API Tests (HTTP requests to backend - requires backend running)
+    // Integration: API tests (HTTP requests to backend - requires backend running)
     {
-      name: 'api',
-      testMatch: /api\/.*\.spec\.ts/,
+      name: 'integration',
+      testMatch: /integration\/.*\.spec\.ts/,
       use: {
         baseURL: 'http://localhost:5001/api',
       },
     },
 
-    // Integration/E2E Tests
+    // E2E: Browser UI tests (requires frontend + backend running)
     {
-      name: 'integration',
-      testMatch: /integration\/.*\.spec\.ts/,
+      name: 'e2e-chrome',
+      testMatch: /e2e\/.*\.spec\.ts/,
       use: {
         ...devices['Desktop Chrome'],
         baseURL: 'http://localhost:5173',
       },
     },
 
-    // Alternative browsers for integration tests
     {
-      name: 'integration-firefox',
-      testMatch: /integration\/.*\.spec\.ts/,
+      name: 'e2e-firefox',
+      testMatch: /e2e\/.*\.spec\.ts/,
       use: {
         ...devices['Desktop Firefox'],
         baseURL: 'http://localhost:5173',
@@ -79,8 +73,8 @@ export default defineConfig({
     },
 
     {
-      name: 'integration-webkit',
-      testMatch: /integration\/.*\.spec\.ts/,
+      name: 'e2e-webkit',
+      testMatch: /e2e\/.*\.spec\.ts/,
       use: {
         ...devices['Desktop Safari'],
         baseURL: 'http://localhost:5173',

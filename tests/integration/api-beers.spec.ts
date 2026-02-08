@@ -25,7 +25,7 @@ const cleanupBeer = async (beerId: string) =>
   await apiService.deleteBeer(beerId);
 };
 
-test.describe('Beer API - HTTP Tests', () => 
+test.describe('Beer API - Integration Tests', () => 
 {
   const createdBeerIds: string[] = [];
 

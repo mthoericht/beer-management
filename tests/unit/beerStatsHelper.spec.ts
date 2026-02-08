@@ -278,6 +278,49 @@ describe('BeerStatsHelper', () =>
     });
   });
 
+  describe('getBreweryCounts', () => 
+  {
+    it('should return sorted by count descending', () => 
+    {
+      const beers = [
+        createBeer({ brewery: 'B' }),
+        createBeer({ brewery: 'A' }),
+        createBeer({ brewery: 'A' }),
+        createBeer({ brewery: 'A' }),
+      ];
+      const result = BeerStatsHelper.getBreweryCounts(beers);
+      expect(result[0]).toEqual({ brewery: 'A', count: 3 });
+      expect(result[1]).toEqual({ brewery: 'B', count: 1 });
+    });
+
+    it('should return empty array for empty input', () => 
+    {
+      expect(BeerStatsHelper.getBreweryCounts([])).toEqual([]);
+    });
+  });
+
+  describe('getRatedBeers', () => 
+  {
+    it('should return empty array when no beers are rated', () => 
+    {
+      const beers = [createBeer(), createBeer()];
+      expect(BeerStatsHelper.getRatedBeers(beers)).toEqual([]);
+    });
+
+    it('should filter beers with valid rating', () => 
+    {
+      const beers = [
+        createBeer({ rating: 4 }),
+        createBeer({ rating: undefined }),
+        createBeer({ rating: 5 }),
+        createBeer({ rating: 0 }),
+      ];
+      const result = BeerStatsHelper.getRatedBeers(beers);
+      expect(result).toHaveLength(2);
+      expect(result.every((b) => (b.rating ?? 0) > 0)).toBe(true);
+    });
+  });
+
   describe('getBeersByStyle', () => 
   {
     it('should filter beers by style', () => 

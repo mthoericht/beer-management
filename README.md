@@ -33,6 +33,7 @@ npm run dev                  # Start frontend + backend concurrently
 
 - Frontend: http://localhost:5174
 - Backend API: http://localhost:5001/api
+- API Health: http://localhost:5001/api/health
 
 ## Scripts
 
@@ -43,36 +44,38 @@ npm run server           # Backend only
 npm run build            # Production build (frontend)
 npm run start-db         # Start MongoDB + backend
 npm run stop-db          # Stop MongoDB + backend
-npm run status           # Show DB/backend status
+npm run restart-db       # Restart MongoDB + backend
+npm run status           # Show DB/backend + API health status
 npm run stop-servers     # Kill all running servers
 ```
 
 ## Testing
 
-Tests use **Vitest** (unit) and **Playwright** (API + E2E).
+Tests use **Vitest** (unit) and **Playwright** (integration + E2E).
 
 | Command | Description |
 |---------|-------------|
-| `npm test` | Run all tests (unit + API + integration) |
+| `npm test` | Run all tests (unit + integration + E2E) |
 | `npm run test:unit` | Unit tests only (no server needed) |
 | `npm run test:unit:watch` | Unit tests in watch mode |
-| `npm run test:api` | API tests (requires backend on port 5001) |
-| `npm run test:integration` | E2E tests (requires backend + frontend) |
+| `npm run test:integration` | API integration tests (requires backend on port 5001) |
+| `npm run test:e2e` | E2E browser tests (requires backend + frontend) |
 | `npm run test:ui` | Playwright interactive UI |
 | `npm run test:report` | Show last test report |
 
 **Structure:**
-- `tests/unit/` – Vitest: pure logic (BeerStatsHelper, beerSchemas validation)
-- `tests/api/` – Playwright: REST API against running backend
-- `tests/integration/` – Playwright: E2E UI flows
+- `tests/unit/` – Vitest: pure logic (BeerStatsHelper, beerSchemas, api, validationMiddleware)
+- `tests/integration/` – Playwright: REST API against running backend
+- `tests/e2e/` – Playwright: E2E UI flows
 
-**Prerequisites:** API tests need `npm run start-db`; integration tests need `npm run start-db` and `npm run client`.
+**Prerequisites:** Integration tests need `npm run start-db`; E2E tests need `npm run start-db` and `npm run client`.
 
 ## API
 
 | Method   | Endpoint           | Description       |
 |----------|--------------------|--------------------|
 | `GET`    | `/api/beers`       | List all beers     |
+| `GET`    | `/api/beers/stats` | Beer statistics    |
 | `GET`    | `/api/beers/:id`   | Get one beer       |
 | `POST`   | `/api/beers`       | Create a beer      |
 | `PUT`    | `/api/beers/:id`   | Update a beer      |
@@ -92,12 +95,16 @@ frontend/src/
 ├── services/            # API layer (BeerManager)
 ├── styles/              # Design tokens (theme.css)
 ├── types/               # TypeScript interfaces
-├── utils/               # Shared utilities (fieldClasses, beerStatsHelper)
+├── utils/               # Shared utilities (api, fieldClasses, beerStatsHelper)
 └── App.vue
 
 backend/src/
-├── routes/              # Express route handlers
+├── controllers/         # Request handlers
+├── middleware/          # Validation middleware
 ├── models/              # Mongoose schemas
+├── routes/              # Express route handlers
+├── types/               # TypeScript types
+├── validators/          # Zod schemas
 └── server.ts
 ```
 

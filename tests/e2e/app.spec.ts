@@ -34,7 +34,7 @@ const deleteBeerByAttributes = async (request: any, name: string, brewery: strin
   }
 };
 
-test.describe('Beer Management App - Integration Tests', () => 
+test.describe('Beer Management App - E2E Tests', () => 
 {
   test.beforeEach(async ({ page }) => 
   {

@@ -184,7 +184,12 @@ const stringOrNumber2 = z.string().or(z.number());
 const beersArray = z.array(beerInputSchema);
 ```
 
-## Testing
+## Unit Tests
+
+- `tests/unit/beerSchemas.spec.ts` – Schema-Validierung (Vitest)
+- `tests/unit/validationMiddleware.spec.ts` – Middleware (Vitest)
+
+## Testing (API)
 
 Test API mit invaliden Daten:
 
@@ -214,6 +219,12 @@ curl -X GET http://localhost:5001/api/beers/507f1f77bcf86cd799439011
 
 ```typescript
 import { beerInputSchema, beerUpdateSchema, beerIdParamsSchema } from '../validators/beerSchemas';
+
+// GET /api/beers - keine Validierung
+router.get('/', BeerController.getAllBeers);
+
+// GET /api/beers/stats - muss vor /:id definiert werden
+router.get('/stats', BeerController.getBeerStats);
 
 // GET /api/beers/:id - ID wird validiert
 router.get('/:id', validateParams(beerIdParamsSchema), BeerController.getBeerById);

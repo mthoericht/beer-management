@@ -13,8 +13,11 @@ cd frontend && npm run dev          # Dev server
 cd backend && npm run dev           # Dev server with nodemon
 cd backend && npm run build         # Compile TypeScript
 
-# E2E Tests
-npx playwright test                 # Run Playwright tests
+# Tests
+npm run test:unit                   # Unit tests (Vitest)
+npm run test:integration            # API integration tests (Playwright)
+npm run test:e2e                    # E2E browser tests (Playwright)
+npx playwright test                 # All Playwright tests
 ```
 
 ## Code Conventions
